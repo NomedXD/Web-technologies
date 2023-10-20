@@ -16,22 +16,18 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepository {
     private static final Logger logger = LoggerFactory.getLogger(ProductRepositoryImpl.class);
     private static final String GET_PRODUCTS_BY_CATEGORY_ID = "SELECT * FROM products WHERE category_id = ?";
-
     @Override
     public Product create(Product entity) {
         return null;
     }
-
     @Override
     public List<Product> read() {
         return null;
     }
-
     @Override
     public Product update(Product entity) {
         return null;
     }
-
     @Override
     public void delete(int id) {
 
