@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
     private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
-    private static final String CREATE_USER = "INSERT INTO users(mail, password, name, surname, date, mobile, street, accommodation_number, flat_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CREATE_USER = "INSERT INTO users(mail, password, name, surname, date) VALUES (?, ?, ?, ?, ?)";
     private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE mail = ?";
 
     @Override
@@ -30,10 +30,6 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setString(3, entity.getName());
             preparedStatement.setString(4, entity.getSurname());
             preparedStatement.setDate(5, Date.valueOf(entity.getDate()));
-            preparedStatement.setString(6, entity.getMobile());
-            preparedStatement.setString(7, entity.getStreet());
-            preparedStatement.setString(8, entity.getAccommodationNumber());
-            preparedStatement.setString(9, entity.getFlatNumber());
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.warn("SQLException while creating user. Full message: " + e.getMessage());

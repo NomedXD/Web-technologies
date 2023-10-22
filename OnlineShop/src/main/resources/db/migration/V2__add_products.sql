@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS products;
 CREATE TABLE products
 (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, name VARCHAR(45) DEFAULT (NULL), description TEXT DEFAULT (NULL),
- category_id INT DEFAULT (NULL), price FLOAT DEFAULT (NULL), image_path VARCHAR(70) DEFAULT (NULL));
+ category_id INT DEFAULT (NULL), price FLOAT DEFAULT (NULL), image_path VARCHAR(70) DEFAULT (NULL),
+ FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE);
 INSERT INTO products(name, description, category_id, price, image_path)
 VALUES
     ('Nike x CLOT','Верхняя часть Air Force 1 "Royal University Blue Silk" изготовлена из синей шелковистой ткани, украшенной фирменным принтом на ткани. Принт вдохновлен тысячелетними китайскими узорами и повторяется на серо-коричневом кожаном слое, скрывающемся под верхом. Это символизирует философию инь-ян и общее послание о том, что красоту можно найти как снаружи, так и внутри. Дизайн новой модели дополнен лаконичным брендом CLOT и резиновой подошвой классического коричневого цвета. Для съемок короткого ролика в рамках рекламной кампании бренд привлек популярного китайского актера и мастера боевых искусств Донни Йена, который снялся в фильме "Изгой один". Звездные войны: истории", серия фильмов "Ип Ман" и другие блокбастеры.',1, 800, 'images/Nike x CLOT_prime.jpg'),

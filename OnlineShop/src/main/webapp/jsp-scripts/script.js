@@ -3,22 +3,21 @@ let form = document.querySelector('.js-form'),
     inputEmail = document.querySelector('.js-input-email'),
     inputName = document.querySelector('.js-input-name'),
     inputSurname = document.querySelector('.js-input-surname'),
-    inputDate = document.querySelector('.js-input-date'),
+   // inputDate = document.querySelector('.js-input-date'),
     inputPassword = document.querySelector('.js-input-password'),
     inputRepeatPassword = document.querySelector('.js-input-repeatPassword');
-import {subYears} from 'date-fns';
 function validateEmail(email) {
     let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return reg.test(String(email).toLowerCase());
 }
 
 function validateName(name) {
-    let reg = /^[a-z ,.'-]+$/i;
+    let reg = /^[а-яА-Я ,.'-]+$/i;
     return reg.test(String(name));
 }
 
 function validateSurname(surname) {
-    let reg = /^[a-z ,.'-]+$/i;
+    let reg = /^[а-яА-Я ,.'-]+$/i;
     return reg.test(String(surname));
 }
 
@@ -31,17 +30,11 @@ function validatePasswordMatching(password, repeatPassword) {
     return (String(password).valueOf() === String(repeatPassword).valueOf());
 }
 
-function validateDate(date) {
-    return subYears(new Date(), 10) >= date;
-
-}
-
 form.onsubmit = function () {
     let emailVal = inputEmail.value,
         nameVal = inputName.value,
         surnameVal = inputSurname.value,
         passwordVal = inputPassword.value,
-        dateVal = inputDate.value,
         repeatPasswordVal = inputRepeatPassword.value,
         emptyInputs = Array.from(formInputs).filter(input => input.value === '');
 
@@ -94,16 +87,16 @@ form.onsubmit = function () {
         inputSurname.style.borderColor = 'transparent';
     }
 
-    if(!validateDate(dateVal)){
-        inputDate.placeholder = 'Surname is not valid';
-        inputDate.style.border = 'solid';
-        inputDate.style.borderColor = '#FF0000';
-        return false;
-    }else {
-        inputDate.placeholder = 'Enter surname';
-        inputDate.style.border = 'none';
-        inputDate.style.borderColor = 'transparent';
-    }
+    // if(!validateDate(dateVal)){
+    //     inputDate.placeholder = 'Surname is not valid';
+    //     inputDate.style.border = 'solid';
+    //     inputDate.style.borderColor = '#FF0000';
+    //     return false;
+    // }else {
+    //     inputDate.placeholder = 'Enter surname';
+    //     inputDate.style.border = 'none';
+    //     inputDate.style.borderColor = 'transparent';
+    // }
 
     if (!validatePassword(passwordVal)) {
         inputPassword.placeholder = 'Password is not valid';

@@ -32,7 +32,7 @@
             <input class="form-control js-input-password" type="password" name="password" placeholder="Enter password">
         </div>
         <div class="form-group">
-            <input class="form-control js-input-repeatPassword" name="repeatPasswordParam" placeholder="Confirm password">
+            <input class="form-control js-input-repeatPassword" name="repeatPassword" placeholder="Confirm password">
         </div>
         <div class="form-group">
             <button class="btn btn-primary btn-block" type="submit">Submit and log in</button>
