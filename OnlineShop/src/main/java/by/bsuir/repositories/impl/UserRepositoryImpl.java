@@ -33,7 +33,7 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.warn("SQLException while creating user. Full message: " + e.getMessage());
-            throw new SQLExecutionException("How did you get here. Check us later");
+            throw new SQLExecutionException();
         } finally {
             connectionPool.closeConnection(connection);
         }
@@ -65,6 +65,7 @@ public class UserRepositoryImpl implements UserRepository {
             if (resultSet.next()) {
                 user = Optional.of(User.builder().id(resultSet.getInt("id"))
                         .mail(resultSet.getString("mail"))
+                        .password(resultSet.getString("password"))
                         .name(resultSet.getString("name"))
                         .surname(resultSet.getString("surname"))
                         .date(resultSet.getDate("date").toLocalDate())
@@ -76,7 +77,9 @@ public class UserRepositoryImpl implements UserRepository {
             return user;
         } catch (SQLException e) {
             logger.warn("SQLException while finding user. Full message: " + e.getMessage());
-            throw new SQLExecutionException("How did you get here. Check us later");
+            throw new SQLExecutionException();
+        } finally {
+            connectionPool.closeConnection(connection);
         }
     }
 }

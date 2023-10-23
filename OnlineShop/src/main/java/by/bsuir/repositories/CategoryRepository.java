@@ -11,5 +11,5 @@ public interface CategoryRepository extends BaseRepository {
     List<Category> read() throws SQLExecutionException;
     Category update(Category entity);
     void delete(int id);
-    Optional<Category> getCategoryById(Integer id);
+    Optional<Category> findById(Integer categoryId) throws SQLExecutionException;
 }

@@ -52,8 +52,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<Category> getCategoryById(Integer id) {
-        return Optional.empty();
+    public Optional<Category> getCategoryById(Integer id) throws SQLExecutionException {
+        return categoryRepository.findById(id);
     }
 
 

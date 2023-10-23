@@ -39,7 +39,7 @@
             <div class="item">
                 <a class="btn btn-outline-dark" href="${contextPath}/login" type="button"><i class="fa fa-sign-in"></i></a>
             </div>
-            <c:if test="${not empty sessionScope.currentUser}">
+            <c:if test="${not empty sessionScope.user}">
                 <div class="item">
                     <a class="btn btn-outline-dark" href="${contextPath}/logout" type="button"><i class="fa fa-sign-out"></i></a>
                 </div>

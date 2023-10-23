@@ -1,6 +1,7 @@
 package by.bsuir.services;
 
 import by.bsuir.domain.Category;
+import by.bsuir.exception.SQLExecutionException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,5 +11,5 @@ import java.util.Optional;
 
 public interface CategoryService extends BaseService<Category>{
     void getHomePage(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException;
-    Optional<Category> getCategoryById(Integer id);
+    Optional<Category> getCategoryById(Integer id) throws SQLExecutionException;
 }

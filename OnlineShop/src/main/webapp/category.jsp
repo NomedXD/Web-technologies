@@ -16,11 +16,11 @@
 <body class="body">
 <jsp:include page="header.jsp"/>
 <c:choose>
-    <c:when test="${products.size() == 0}">
+    <c:when test="${requestScope.products.size() == 0}">
         <div class="bar warn">No products found. Try later</div>
     </c:when>
     <c:otherwise>
-        <c:forEach items="${products}" var="product">
+        <c:forEach items="${requestScope.products}" var="product">
             <div class="row p-2 bg-white border rounded mt-2">
                 <div class="col-md-3 mt-1">
                     <div id="carouselExampleControls${product.id}" class="carousel slide" data-bs-ride="carousel">
@@ -67,6 +67,7 @@
         </c:forEach>
     </c:otherwise>
 </c:choose>
+<div class="col-md-3 mt-2"></div>
 </body>
 <jsp:include page="footer.jsp"/>
 </html>
