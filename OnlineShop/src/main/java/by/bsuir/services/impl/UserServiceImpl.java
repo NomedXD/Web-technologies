@@ -8,7 +8,6 @@ import by.bsuir.repositories.UserRepository;
 import by.bsuir.repositories.impl.UserRepositoryImpl;
 import by.bsuir.services.UserService;
 import by.bsuir.utils.ValidatorUtils;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,8 +54,7 @@ public class UserServiceImpl implements UserService {
                 response.sendRedirect(request.getContextPath() + "/login");
             } catch (SQLExecutionException e) {
                 request.setAttribute("errorMessage", e.getMessage());
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath());
-                requestDispatcher.forward(request, response);
+                request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
             }
         }
     }
@@ -75,8 +73,7 @@ public class UserServiceImpl implements UserService {
             }
         } catch (SQLExecutionException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
         }
     }
 

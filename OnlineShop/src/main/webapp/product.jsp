@@ -40,7 +40,7 @@
                 <div class="col-lg-7 justify-content: right">
                     <h4 class="box-title mt-5">Product description</h4>
                     <p>${requestScope.product.description}</p><br>
-                    <a href="${contextPath}/cart/add/${requestScope.product.id}" class="btn btn-dark btn-lg">Add to cart ${requestScope.product.price}$</a>
+                    <a href="${contextPath}/cart/add?productId=${requestScope.product.id}" class="btn btn-dark btn-lg">Add to cart ${requestScope.product.price}$</a>
                 </div>
             </div>
         </div>

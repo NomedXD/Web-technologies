@@ -6,7 +6,6 @@ import by.bsuir.exception.SQLExecutionException;
 import by.bsuir.repositories.CategoryRepository;
 import by.bsuir.repositories.impl.CategoryRepositoryImpl;
 import by.bsuir.services.CategoryService;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,12 +41,10 @@ public class CategoryServiceImpl implements CategoryService {
     public void getHomePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             request.setAttribute("categories", read());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.SHOP_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.SHOP_PAGE.getPath()).forward(request, response);
         } catch (SQLExecutionException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
         }
     }
 

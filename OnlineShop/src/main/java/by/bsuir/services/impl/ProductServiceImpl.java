@@ -1,5 +1,6 @@
 package by.bsuir.services.impl;
 
+import by.bsuir.domain.Cart;
 import by.bsuir.domain.Product;
 import by.bsuir.enums.PagesPathEnum;
 import by.bsuir.exception.NoSuchCategoryException;
@@ -10,10 +11,10 @@ import by.bsuir.repositories.ProductRepository;
 import by.bsuir.repositories.impl.ProductRepositoryImpl;
 import by.bsuir.services.CategoryService;
 import by.bsuir.services.ProductService;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -47,12 +48,10 @@ public class ProductServiceImpl implements ProductService {
     public void getCategoryPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             request.setAttribute("products", productRepository.getProductsByCategoryId(Integer.parseInt(request.getParameter("categoryId"))));
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.CATEGORY_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.CATEGORY_PAGE.getPath()).forward(request, response);
         } catch (SQLExecutionException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
         }
     }
 
@@ -67,13 +66,39 @@ public class ProductServiceImpl implements ProductService {
             request.getRequestDispatcher(PagesPathEnum.PRODUCT_PAGE.getPath()).forward(request, response);
         } catch (SQLExecutionException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
         } catch (NoSuchEntityException e)  {
             LoggerFactory.getLogger(ProductRepositoryImpl.class).error(e.getLoggerMessage());
             request.setAttribute("errorMessage", e.getMessage());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath());
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        }
+    }
+
+    @Override
+    public void addProductToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Integer productId = Integer.parseInt(request.getParameter("productId"));
+        try {
+            Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchProductException(productId));
+            Cart cart;
+            if(session.getAttribute("cart") == null) {
+                cart = new Cart();
+            } else {
+                cart = (Cart) session.getAttribute("cart");
+            }
+            cart.addProduct(product);
+            session.setAttribute("cart", cart);
+            Integer categoryId = product.getCategoryId();
+            request.setAttribute("product", product);
+            request.setAttribute("categoryName", categoryService.getCategoryById(categoryId).orElseThrow(() -> new NoSuchCategoryException(categoryId)).getName());
+            request.getRequestDispatcher(PagesPathEnum.PRODUCT_PAGE.getPath()).forward(request, response);
+        } catch (SQLExecutionException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        } catch (NoSuchEntityException e) {
+            LoggerFactory.getLogger(ProductRepositoryImpl.class).error(e.getLoggerMessage());
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
         }
     }
 

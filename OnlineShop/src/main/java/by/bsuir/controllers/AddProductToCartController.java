@@ -10,11 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/product")
-public class ProductController extends HttpServlet {
+@WebServlet({"/cart/add"})
+public class AddProductToCartController extends HttpServlet {
     private final ProductService productService = new ProductServiceImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productService.getProductPage(req, resp);
+        productService.addProductToCart(req, resp);
     }
 }
