@@ -29,7 +29,7 @@
             </div>
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/account?page=1&size=5">Account</a>
+                <a class="btn btn-outline-dark" href="${contextPath}/account">Account</a>
             </div>
 
             <div class="item">

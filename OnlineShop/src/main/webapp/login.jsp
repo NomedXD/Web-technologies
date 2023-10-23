@@ -29,6 +29,7 @@
         </c:if>
         <div class="form-group">
             <a class="btn btn-primary btn-block" href="${contextPath}/registration">Register</a>
+            <input type="hidden" name="defaultSuccessUrl" value="${requestScope.defaultSuccessUrl}">
         </div>
         <a href="#" class="forgot">Forgot your email or password?</a>
     </form>

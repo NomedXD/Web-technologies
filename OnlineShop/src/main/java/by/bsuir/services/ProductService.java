@@ -13,5 +13,6 @@ public interface ProductService extends BaseService<Product> {
     void getCategoryPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
     void getProductPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
     void addProductToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    void removeProductFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
     Optional<Product> getProductById(Integer productId) throws SQLExecutionException;
 }

@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
                         .password(request.getParameter("password"))
                         .name(request.getParameter("name"))
                         .surname(request.getParameter("surname"))
-                        .date(LocalDate.parse((CharSequence) request.getParameter("date"))).build());
+                        .date(LocalDate.parse(request.getParameter("date"))).build());
                 response.sendRedirect(request.getContextPath() + "/login");
             } catch (SQLExecutionException e) {
                 request.setAttribute("errorMessage", e.getMessage());
@@ -66,7 +66,11 @@ public class UserServiceImpl implements UserService {
             if (user.isPresent() && BCrypt.verifyer().verify(request.getParameter("password").toCharArray(), user.get().getPassword()).verified) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user.get());
-                response.sendRedirect(request.getContextPath() + "/shop");
+                String defaultSuccessUrl = "/shop";
+                if(request.getParameter("defaultSuccessUrl") != null) {
+                    defaultSuccessUrl = request.getParameter("defaultSuccessUrl");
+                }
+                response.sendRedirect(request.getContextPath() + defaultSuccessUrl);
             } else {
                 request.setAttribute("loginErrorMessage", "Wrong email or password. Try again");
                 request.getRequestDispatcher(PagesPathEnum.LOG_IN_PAGE.getPath()).forward(request, response);
@@ -81,5 +85,10 @@ public class UserServiceImpl implements UserService {
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
         response.sendRedirect(request.getContextPath() + "/shop");
+    }
+
+    @Override
+    public void getAccountPage(HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("orders", );
     }
 }

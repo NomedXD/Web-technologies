@@ -103,6 +103,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void removeProductFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ((Cart)session.getAttribute("cart")).removeProduct(Integer.parseInt(request.getParameter("productId")));
+        request.getRequestDispatcher("/cart").forward(request, response);
+    }
+
+    @Override
     public Optional<Product> getProductById(Integer productId) throws SQLExecutionException {
         return productRepository.findById(productId);
     }

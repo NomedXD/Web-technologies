@@ -11,4 +11,5 @@ public interface UserService extends BaseService<User>{
     void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
     void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
     void logout(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    void getAccountPage(HttpServletRequest request, HttpServletResponse response);
 }

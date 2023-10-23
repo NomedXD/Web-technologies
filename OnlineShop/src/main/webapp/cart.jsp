@@ -67,7 +67,7 @@
                                                 <h6 class="mb-0 singlePrice">${cartProduct.price}</h6>
                                             </div>
                                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                <a href="${contextPath}/cart/remove/${cartProduct.id}" class="text-muted">
+                                                <a href="${contextPath}/cart/remove?productId=${cartProduct.id}" class="text-muted">
                                                     <i class="fas fa-times"></i>
                                                 </a>
                                             </div>
