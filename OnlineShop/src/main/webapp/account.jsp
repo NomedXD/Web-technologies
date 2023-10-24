@@ -26,9 +26,9 @@
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
                                  class="rounded-circle" width="150">
                             <div class="mt-3">
-                                <h4>${user.name}</h4>
+                                <h4>${sessionScope.user.name}</h4>
                                 <p class="text-secondary mb-1">Full Stack Developer</p>
-                                <p class="text-muted font-size-sm">${user.street}, ${user.accommodationNumber}, ${user.flatNumber}</p>
+                                <p class="text-muted font-size-sm">${sessionScope.user.street}, ${sessionScope.user.accommodationNumber}, ${sessionScope.user.flatNumber}</p>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                 <h6 class="mb-0">Full Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${user.name} ${user.surname}
+                                ${sessionScope.user.name} ${sessionScope.user.surname}
                             </div>
                         </div>
                         <hr>
@@ -51,7 +51,7 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${user.mail}
+                                ${sessionScope.user.mail}
                             </div>
                         </div>
                         <hr>
@@ -60,7 +60,7 @@
                                 <h6 class="mb-0">Birthday</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${user.date}
+                                ${sessionScope.user.date}
                             </div>
                         </div>
                         <hr>
@@ -71,7 +71,7 @@
                                     <h6 class="mb-0">Mobile</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${user.mobile}
+                                    ${sessionScope.user.mobile}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
                                             <input type="text" name="mobile" class="form-control">
@@ -85,7 +85,7 @@
                                     <h6 class="mb-0">Address: Street</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${user.street}
+                                    ${sessionScope.user.street}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
                                             <input type="text" name="street" class="form-control">
@@ -99,7 +99,7 @@
                                     <h6 class="mb-0">Address: Accommodation number</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${user.accommodationNumber}
+                                    ${sessionScope.user.accommodationNumber}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
                                             <input type="text" name="accommodationNumber" class="form-control">
@@ -113,7 +113,7 @@
                                     <h6 class="mb-0">Address: Flat number</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${user.flatNumber}
+                                    ${sessionScope.user.flatNumber}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
                                             <input type="text" name="flatNumber" class="form-control">
@@ -137,8 +137,8 @@
 
 <!--Orders details below-->
 <div class="container-fluid">
-    <c:if test="${not empty orders}">
-        <c:forEach items="${orders}" var="order">
+    <c:if test="${not empty requestScope.orders}">
+        <c:forEach items="${requestScope.orders}" var="order">
             <div class="container">
                 <!-- Title -->
                 <div class="d-flex justify-content-between align-items-center py-3">
@@ -182,24 +182,22 @@
                                             <td>
                                                 <div class="d-flex mb-2">
                                                     <div class="flex-shrink-0">
-                                                        <img src="${contextPath}/${product.getPrimeImage().path}" alt=""
+                                                        <img src="${contextPath}/${product.imagePath}" alt=""
                                                              width="35" class="img-fluid">
                                                     </div>
                                                     <div class="flex-lg-grow-1 ms-3">
                                                         <h6 class="small mb-0">
-                                                            <a href="${contextPath}/product/${product.id}"
+                                                            <a href="${contextPath}/product?productId=${product.id}"
                                                                class="text-reset">
                                                                     ${product.name}
                                                             </a>
                                                         </h6>
-                                                        <span class="small">${product.category.name}</span>
+                                                        <span class="small">Category Name</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <c:forEach items="${order.orderDetails}" var="details">
-                                                    <c:if test="${details.productId == product.id}">${details.productQuantity}</c:if>
-                                                </c:forEach>
+                                                1
                                             </td>
                                             <td class="text-end">${product.price}</td>
                                         </tr>
@@ -252,12 +250,12 @@
                                     <div class="col-lg-6">
                                         <h3 class="h6">Billing address</h3>
                                         <address>
-                                            <strong>${order.user.name} ${order.user.surname}</strong><br>
+                                            <strong>${sessionScope.user.name} ${sessionScope.user.surname}</strong><br>
                                             <c:choose>
                                                 <c:when test="${empty order.address}">-</c:when>
                                                 <c:otherwise>${order.address}</c:otherwise>
                                             </c:choose><br>
-                                            <abbr title="Phone">P:</abbr> ${order.user.mobile}
+                                            <abbr title="Phone">P:</abbr> ${sessionScope.user.mobile}
                                         </address>
                                     </div>
                                 </div>
@@ -279,12 +277,12 @@
                                 <hr>
                                 <h3 class="h6">Address</h3>
                                 <address>
-                                    <strong>${order.user.name} ${order.user.surname}</strong><br>
+                                    <strong>${sessionScope.user.name} ${sessionScope.user.surname}</strong><br>
                                     <c:choose>
                                         <c:when test="${empty order.address}">${order.shippingType}</c:when>
                                         <c:otherwise>${order.shippingType}<br>${order.address}</c:otherwise>
                                     </c:choose><br>
-                                    <abbr title="Phone">P:</abbr> ${order.user.mobile}
+                                    <abbr title="Phone">P:</abbr> ${sessionScope.user.mobile}
                                 </address>
                             </div>
                         </div>

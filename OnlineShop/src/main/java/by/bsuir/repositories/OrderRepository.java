@@ -15,5 +15,5 @@ public interface OrderRepository extends BaseRepository {
 
     void delete(int id);
 
-    List<Order> findAllByUserId(Integer userId);
+    List<Order> findAllByUserId(Integer userId) throws SQLExecutionException;
 }

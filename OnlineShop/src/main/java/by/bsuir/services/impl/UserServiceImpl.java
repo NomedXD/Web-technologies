@@ -6,6 +6,7 @@ import by.bsuir.enums.PagesPathEnum;
 import by.bsuir.exception.SQLExecutionException;
 import by.bsuir.repositories.UserRepository;
 import by.bsuir.repositories.impl.UserRepositoryImpl;
+import by.bsuir.services.OrderService;
 import by.bsuir.services.UserService;
 import by.bsuir.utils.ValidatorUtils;
 import jakarta.servlet.ServletException;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository = new UserRepositoryImpl();
+    private final OrderService orderService = new OrderServiceImpl();
 
     @Override
     public User create(User entity) {
@@ -67,7 +69,7 @@ public class UserServiceImpl implements UserService {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user.get());
                 String defaultSuccessUrl = "/shop";
-                if(request.getParameter("defaultSuccessUrl") != null) {
+                if(!request.getParameter("defaultSuccessUrl").isEmpty()) {
                     defaultSuccessUrl = request.getParameter("defaultSuccessUrl");
                 }
                 response.sendRedirect(request.getContextPath() + defaultSuccessUrl);
@@ -88,7 +90,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void getAccountPage(HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("orders", );
+    public void getAccountPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            request.setAttribute("orders", orderService.getOrdersByUserId(((User)request.getSession().getAttribute("user")).getId()));
+            request.getRequestDispatcher(PagesPathEnum.ACCOUNT_PAGE.getPath()).forward(request, response);
+        } catch (SQLExecutionException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        }
     }
 }
