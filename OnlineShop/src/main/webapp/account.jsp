@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <hr>
-                        <form action="${contextPath}/account/update" method="POST"
+                        <form action="${contextPath}/account" method="POST"
                               id="updateUser">
                             <div class="row">
                                 <div class="col-sm-3">

@@ -16,7 +16,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user.get());
                 String defaultSuccessUrl = "/shop";
-                if(!request.getParameter("defaultSuccessUrl").isEmpty()) {
+                if (!request.getParameter("defaultSuccessUrl").isEmpty()) {
                     defaultSuccessUrl = request.getParameter("defaultSuccessUrl");
                 }
                 response.sendRedirect(request.getContextPath() + defaultSuccessUrl);
@@ -92,11 +94,48 @@ public class UserServiceImpl implements UserService {
     @Override
     public void getAccountPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            request.setAttribute("orders", orderService.getOrdersByUserId(((User)request.getSession().getAttribute("user")).getId()));
+            request.setAttribute("orders", orderService.getOrdersByUserId(((User) request.getSession().getAttribute("user")).getId()));
             request.getRequestDispatcher(PagesPathEnum.ACCOUNT_PAGE.getPath()).forward(request, response);
         } catch (SQLExecutionException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        }
+    }
+
+    @Override
+    public void updateAccountData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, String> params = new HashMap<>();
+        User user = (User) request.getSession().getAttribute("user");
+        params.put("mobile", request.getParameter("mobile"));
+        params.put("street", request.getParameter("street"));
+        params.put("accommodationNumber", request.getParameter("accommodationNumber"));
+        params.put("flatNumber", request.getParameter("flatNumber"));
+        setInputs(params, user);
+        User updatedUserFields = User.builder().id(user.getId()).mail(user.getMail()).password(user.getPassword()).
+                name(user.getName()).surname(user.getSurname()).date(user.getDate()).
+                mobile(params.get("mobile")).street(params.get("street")).
+                accommodationNumber(params.get("accommodationNumber")).
+                flatNumber(params.get("flatNumber")).build();
+        try {
+            request.getSession().setAttribute("user", userRepository.update(updatedUserFields));
+            request.setAttribute("orders", orderService.getOrdersByUserId(((User) request.getSession().getAttribute("user")).getId()));
+            request.getRequestDispatcher(PagesPathEnum.ACCOUNT_PAGE.getPath()).forward(request, response);
+        } catch (SQLExecutionException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        }
+    }
+
+    private void setInputs(Map<String, String> params, User user) {
+        for (var entry : params.entrySet()) {
+            if (entry.getValue().isEmpty()) {
+                switch (entry.getKey()) {
+                    case "mobile" -> entry.setValue(user.getMobile());
+                    case "street" -> entry.setValue(user.getStreet());
+                    case "accommodationNumber" -> entry.setValue(user.getAccommodationNumber());
+                    case "flatNumber" -> entry.setValue(user.getFlatNumber());
+                }
+            }
         }
     }
 }

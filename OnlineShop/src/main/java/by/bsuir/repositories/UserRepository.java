@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface UserRepository extends BaseRepository{
     void create(User entity) throws SQLExecutionException;
     List<User> read() throws SQLExecutionException;
-    User update(User entity);
+    User update(User entity) throws SQLExecutionException;
     void delete(int id);
     Optional<User> findUserByMail(String userMail) throws SQLExecutionException;
 }

@@ -18,6 +18,7 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
     private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
     private static final String CREATE_USER = "INSERT INTO users(mail, password, name, surname, date) VALUES (?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER_ACCOUNT_DATA = "UPDATE users SET mobile = ?, street = ?, accommodation_number = ?, flat_number = ? WHERE id = ?";
     private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE mail = ?";
 
     @Override
@@ -45,8 +46,23 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User update(User entity) {
-        return null;
+    public User update(User entity) throws SQLExecutionException {
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_ACCOUNT_DATA);
+            preparedStatement.setString(1, entity.getMobile());
+            preparedStatement.setString(2, entity.getStreet());
+            preparedStatement.setString(3, entity.getAccommodationNumber());
+            preparedStatement.setString(4, entity.getFlatNumber());
+            preparedStatement.setInt(5, entity.getId());
+            preparedStatement.executeUpdate();
+            return findUserByMail(entity.getMail()).get();
+        } catch (SQLException e) {
+            logger.warn("SQLException while updating user account data. Full message: " + e.getMessage());
+            throw new SQLExecutionException();
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
     }
 
     @Override
