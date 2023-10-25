@@ -7,7 +7,7 @@ import by.bsuir.exception.SQLExecutionException;
 import java.util.List;
 
 public interface OrderRepository extends BaseRepository {
-    Order create(Order entity);
+    void create(Order entity) throws SQLExecutionException;
 
     List<Order> read() throws SQLExecutionException;
 

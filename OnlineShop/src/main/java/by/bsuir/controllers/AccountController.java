@@ -1,5 +1,6 @@
 package by.bsuir.controllers;
 
+import by.bsuir.enums.PagesPathEnum;
 import by.bsuir.services.UserService;
 import by.bsuir.services.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
@@ -18,7 +19,7 @@ public class AccountController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getSession().getAttribute("user") == null) {
             req.setAttribute("defaultSuccessUrl", "/account");
-            req.getRequestDispatcher(req.getContextPath() + "/login").forward(req, resp);
+            req.getRequestDispatcher(PagesPathEnum.LOG_IN_PAGE.getPath()).forward(req, resp);
         } else {
             userService.getAccountPage(req, resp);
         }

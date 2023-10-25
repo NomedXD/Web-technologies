@@ -33,10 +33,6 @@
             </div>
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/search?page=1&size=5">Search</a>
-            </div>
-
-            <div class="item">
                 <a class="btn btn-outline-dark" href="${contextPath}/login" type="button"><i class="fa fa-sign-in"></i></a>
             </div>
             <c:if test="${not empty sessionScope.user}">
@@ -69,7 +65,7 @@
 
                         <div class="modal-line">
                             <i class="fa-solid fa-house"></i>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/catalog?page=1&size=5">Home</a>
+                            <a class="btn btn-outline-secondary" href="${contextPath}/shop">Home</a>
                         </div>
 
                         <div class="modal-line">
@@ -84,12 +80,7 @@
 
                         <div class="modal-line">
                             <i class="fa-solid fa-file-lines"></i>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/account?page=1&size=5">Account</a>
-                        </div>
-
-                        <div class="modal-line">
-                            <i class="fa-solid fa-circle-info"></i>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/search?page=1&size=5">Search</a>
+                            <a class="btn btn-outline-secondary" href="${contextPath}/account">Account</a>
                         </div>
 
                         <a href="#" class="navb-button" type="button">Sales</a>
