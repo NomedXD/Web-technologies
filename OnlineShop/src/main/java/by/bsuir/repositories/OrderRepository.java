@@ -13,7 +13,7 @@ public interface OrderRepository extends BaseRepository {
 
     Order update(Order entity);
 
-    void delete(int id);
+    void delete(int id) throws SQLExecutionException;
 
     List<Order> findAllByUserId(Integer userId) throws SQLExecutionException;
 }

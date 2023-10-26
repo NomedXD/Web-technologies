@@ -12,4 +12,5 @@ import java.util.List;
 public interface OrderService extends BaseService<Order>{
     List<Order> getOrdersByUserId(Integer userId) throws SQLExecutionException;
     void applyOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    void removeOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

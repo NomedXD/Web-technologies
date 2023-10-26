@@ -157,7 +157,7 @@
                                 <div class="mb-3 d-flex justify-content-between">
                                     <div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a href="${contextPath}/cart/remove_order?orderId=${order.id}" class="text-muted">
+                                            <a href="${contextPath}/account/remove_order?orderId=${order.id}" class="text-muted">
                                                 <i class="fas fa-times">Удалить заказ</i>
                                             </a>
                                         </div>

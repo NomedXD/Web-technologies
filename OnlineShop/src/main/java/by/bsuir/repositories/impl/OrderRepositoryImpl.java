@@ -26,6 +26,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     private static final String GET_ORDER_PRODUCTS = "SELECT * FROM orders_products JOIN products ON orders_products.product_id = products.id WHERE order_id = ?";
     private static final String CREATE_ORDER = "INSERT INTO orders(price, date, user_id, cc_number, shipping_type, shipping_cost, discount_code_id, address, customer_notes, uuid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String INSERT_PRODUCT_ORDER_REFERENCE = "INSERT INTO orders_products(order_id, product_id) VALUES (?, ?)";
+    private static final String REMOVE_ORDER_BY_ID = "DELETE FROM orders WHERE id = ?";
 
     @Override
     public void create(Order entity) throws SQLExecutionException {
@@ -79,8 +80,18 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void delete(int id) {
-
+    public void delete(int id) throws SQLExecutionException {
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(REMOVE_ORDER_BY_ID);
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.warn("SQLException while deleting order. Full message: " + e.getMessage());
+            throw new SQLExecutionException();
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
     }
 
     @Override

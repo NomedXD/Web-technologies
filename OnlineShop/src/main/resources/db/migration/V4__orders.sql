@@ -8,4 +8,5 @@ CREATE TABLE orders
  FOREIGN KEY (discount_code_id) REFERENCES discount_codes (id) ON UPDATE CASCADE);
 
 DROP TABLE IF EXISTS orders_products;
-CREATE TABLE orders_products(order_id INT NOT NULL, product_id INT NOT NULL, PRIMARY KEY(order_id, product_id));
+CREATE TABLE orders_products(order_id INT NOT NULL, product_id INT NOT NULL, PRIMARY KEY(order_id, product_id),
+FOREIGN KEY (order_id) REFERENCES orders (id) ON UPDATE CASCADE ON DELETE CASCADE);

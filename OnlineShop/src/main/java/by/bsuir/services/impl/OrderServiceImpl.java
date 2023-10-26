@@ -71,4 +71,16 @@ public class OrderServiceImpl implements OrderService {
         order.setCreditCardNumber(ccNumber.substring(0, 5).concat(" **** **** ").concat(ccNumber.substring(ccNumber.length()-5)));
         return order;
     }
+
+    @Override
+    public void removeOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            orderRepository.delete(Integer.parseInt(request.getParameter("orderId")));
+            request.setAttribute("orders", orderRepository.findAllByUserId(((User) request.getSession().getAttribute("user")).getId()));
+            request.getRequestDispatcher(PagesPathEnum.ACCOUNT_PAGE.getPath()).forward(request, response);
+        } catch (SQLExecutionException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        }
+    }
 }
