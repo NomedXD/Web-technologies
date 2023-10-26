@@ -1,6 +1,7 @@
 package by.bsuir.repositories.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import by.bsuir.domain.Role;
 import by.bsuir.domain.User;
 import by.bsuir.exception.SQLExecutionException;
 import by.bsuir.repositories.UserRepository;
@@ -12,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,8 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String CREATE_USER = "INSERT INTO users(mail, password, name, surname, date) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_USER_ACCOUNT_DATA = "UPDATE users SET mobile = ?, street = ?, accommodation_number = ?, flat_number = ? WHERE id = ?";
     private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE mail = ?";
-
+    private static final String  GET_USER_ROLES = "SELECT * FROM users_roles JOIN roles ON users_roles.role_id = roles.id WHERE users_roles.user_id = ?";
+    private static final String CREATE_USER_ROLE = "INSERT INTO users_roles(user_id, role_id) VALUES (?, ?)";
     @Override
     public void create(User entity) throws SQLExecutionException {
         Connection connection = connectionPool.getConnection();
@@ -31,6 +34,10 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setString(3, entity.getName());
             preparedStatement.setString(4, entity.getSurname());
             preparedStatement.setDate(5, Date.valueOf(entity.getDate()));
+            preparedStatement.execute();
+            preparedStatement = connection.prepareStatement(CREATE_USER_ROLE);
+            preparedStatement.setInt(1, findUserByMail(entity.getMail()).get().getId());
+            preparedStatement.setInt(2, 2);
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.warn("SQLException while creating user. Full message: " + e.getMessage());
@@ -89,6 +96,7 @@ public class UserRepositoryImpl implements UserRepository {
                         .street(resultSet.getString("street"))
                         .accommodationNumber(resultSet.getString("accommodation_number"))
                         .flatNumber(resultSet.getString("flat_number")).build());
+                user.get().setRoles(findRolesByUserId(user.get().getId()));
             }
             return user;
         } catch (SQLException e) {
@@ -96,6 +104,25 @@ public class UserRepositoryImpl implements UserRepository {
             throw new SQLExecutionException();
         } finally {
             connectionPool.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Role> findRolesByUserId(Integer userId) throws SQLExecutionException {
+        List<Role> userRoles = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_ROLES);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                userRoles.add(Role.builder().id(resultSet.getInt("roles.id"))
+                        .name(resultSet.getString("roles.name")).build());
+            }
+            return userRoles;
+        } catch (SQLException e) {
+            logger.warn("SQLException while finding user roles. Full message: " + e.getMessage());
+            throw new SQLExecutionException();
         }
     }
 }

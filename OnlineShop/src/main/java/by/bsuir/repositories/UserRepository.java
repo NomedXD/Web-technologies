@@ -1,5 +1,6 @@
 package by.bsuir.repositories;
 
+import by.bsuir.domain.Role;
 import by.bsuir.domain.User;
 import by.bsuir.exception.SQLExecutionException;
 
@@ -12,4 +13,5 @@ public interface UserRepository extends BaseRepository{
     User update(User entity) throws SQLExecutionException;
     void delete(int id);
     Optional<User> findUserByMail(String userMail) throws SQLExecutionException;
+    List<Role> findRolesByUserId(Integer userId) throws SQLExecutionException;
 }

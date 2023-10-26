@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -21,6 +22,11 @@ public class User extends BaseEntity{
     private String street;
     private String accommodationNumber;
     private String flatNumber;
+    private List<Role> roles;
+
+    public boolean hasAdminRole() {
+        return getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"));
+    }
 
     //@ToString.Exclude
     //@EqualsAndHashCode.Exclude

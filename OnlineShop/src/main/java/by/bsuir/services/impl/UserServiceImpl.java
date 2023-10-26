@@ -70,11 +70,15 @@ public class UserServiceImpl implements UserService {
             if (user.isPresent() && BCrypt.verifyer().verify(request.getParameter("password").toCharArray(), user.get().getPassword()).verified) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user.get());
-                String defaultSuccessUrl = "/shop";
-                if (!request.getParameter("defaultSuccessUrl").isEmpty()) {
-                    defaultSuccessUrl = request.getParameter("defaultSuccessUrl");
+                if (user.get().hasAdminRole()) {
+                    response.sendRedirect(request.getContextPath() + "/account");
+                } else {
+                    String defaultSuccessUrl = "/shop";
+                    if (!request.getParameter("defaultSuccessUrl").isEmpty()) {
+                        defaultSuccessUrl = request.getParameter("defaultSuccessUrl");
+                    }
+                    response.sendRedirect(request.getContextPath() + defaultSuccessUrl);
                 }
-                response.sendRedirect(request.getContextPath() + defaultSuccessUrl);
             } else {
                 request.setAttribute("loginErrorMessage", "Wrong email or password. Try again");
                 request.getRequestDispatcher(PagesPathEnum.LOG_IN_PAGE.getPath()).forward(request, response);
@@ -93,12 +97,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void getAccountPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            request.setAttribute("orders", orderService.getOrdersByUserId(((User) request.getSession().getAttribute("user")).getId()));
-            request.getRequestDispatcher(PagesPathEnum.ACCOUNT_PAGE.getPath()).forward(request, response);
-        } catch (SQLExecutionException e) {
-            request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        if (((User)request.getSession().getAttribute("user")).hasAdminRole()) {
+            request.getRequestDispatcher(PagesPathEnum.ADMIN_ACCOUNT_PAGE.getPath()).forward(request, response);
+        } else {
+            try {
+                request.setAttribute("orders", orderService.getOrdersByUserId(((User) request.getSession().getAttribute("user")).getId()));
+                request.getRequestDispatcher(PagesPathEnum.ACCOUNT_PAGE.getPath()).forward(request, response);
+            } catch (SQLExecutionException e) {
+                request.setAttribute("errorMessage", e.getMessage());
+                request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+            }
         }
     }
 

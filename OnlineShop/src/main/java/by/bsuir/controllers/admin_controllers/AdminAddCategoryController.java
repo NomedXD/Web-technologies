@@ -1,8 +1,7 @@
-package by.bsuir.controllers;
+package by.bsuir.controllers.admin_controllers;
 
 import by.bsuir.enums.PagesPathEnum;
-import by.bsuir.services.UserService;
-import by.bsuir.services.impl.UserServiceImpl;
+import by.bsuir.services.impl.AdminServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,21 +10,20 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/account")
-public class AccountController extends HttpServlet {
-    private final UserService userService = new UserServiceImpl();
+@WebServlet("/admin/add_category")
+public class AdminAddCategoryController extends HttpServlet {
+    AdminServiceImpl adminService = new AdminServiceImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getSession().getAttribute("user") == null) {
-            req.setAttribute("defaultSuccessUrl", "/account");
             req.getRequestDispatcher(PagesPathEnum.LOG_IN_PAGE.getPath()).forward(req, resp);
         } else {
-            userService.getAccountPage(req, resp);
+            adminService.getAddCategoryPage(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userService.updateAccountData(req, resp);
+        super.doPost(req, resp);
     }
 }
