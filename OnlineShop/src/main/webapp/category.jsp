@@ -4,7 +4,7 @@
 <html>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <head>
-    <title>Category</title>
+    <title>Категория</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${contextPath}/jsp-scc-styles/category.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -15,9 +15,13 @@
 </head>
 <body class="body">
 <jsp:include page="header.jsp"/>
+<div class="language">
+    <img src="${contextPath}/images/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
+    <img src="${contextPath}/images/lang__en.png" alt="en" data-google-lang="en">
+</div>
 <c:choose>
     <c:when test="${requestScope.products.size() == 0}">
-        <div class="bar warn">No products found. Try later</div>
+        <div class="bar warn">Продуктов не найдено. Попробуйте позже</div>
     </c:when>
     <c:otherwise>
         <c:forEach items="${requestScope.products}" var="product">
@@ -56,11 +60,11 @@
                     <div class="d-flex flex-row align-items-center">
                         <h4 class="mr-1">${product.price}$</h4>
                     </div>
-                    <h6 class="text-success">Available</h6>
+                    <h6 class="text-success">Доступно</h6>
                     <div class="d-flex flex-column mt-4">
                         <a class="btn btn-dark btn-sm" type="button"
-                           href="${pageContext.request.contextPath}/product?productId=${product.id}">More info</a>
-                        <button class="btn btn-outline-dark btn-sm mt-2" type="button">Add to wishlist</button>
+                           href="${pageContext.request.contextPath}/product?productId=${product.id}">Больше информации</a>
+                        <button class="btn btn-outline-dark btn-sm mt-2" type="button">Добавить в избранное</button>
                     </div>
                 </div>
             </div>
@@ -71,3 +75,6 @@
 </body>
 <jsp:include page="footer.jsp"/>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="${contextPath}/jsp-scripts/google-translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=TranslateInit"></script>

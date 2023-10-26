@@ -40,3 +40,15 @@ body{
     border-top: 0 solid #dee2e6 !important;
     color: #728299!important;
 }
+
+/* google translate hide panel*/
+body {
+    top: 0 !important;
+}
+.skiptranslate {
+    display: none;
+    height: 0;
+}
+.language__img {
+    cursor: pointer;
+}

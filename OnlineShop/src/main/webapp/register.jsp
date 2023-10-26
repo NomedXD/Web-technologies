@@ -14,7 +14,7 @@
 <body>
 <div class="login-dark">
     <form action="${contextPath}/registration" method="POST" class="js-form">
-        <h2 class="sr-only">Login Form</h2>
+        <h2 class="sr-only">Registration Form</h2>
         <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
         <div class="form-group">
             <input class="form-control js-input-email" name="mail" placeholder="Enter email">
@@ -35,7 +35,7 @@
             <input class="form-control js-input-repeatPassword" name="repeatPassword" placeholder="Confirm password">
         </div>
         <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit">Submit and log in</button>
+            <button class="btn btn-primary btn-block" type="submit">Зарегистрироваться</button>
         </div>
         <c:if test="${not empty requestScope.registrationErrorMessage}">
             <div class="form-group">

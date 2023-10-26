@@ -11,7 +11,7 @@
     <c:if test="${not empty errorMessage}">
       <a class="btn-go-home">${errorMessage}</a>
     </c:if>
-    <a href="${contextPath}/catalog" class="btn-go-home" target="_blank">GO BACK HOME</a>
+    <a href="${contextPath}/catalog" class="btn-go-home" target="_blank">Вернуться на главную</a>
   </div>
   <div class="objects">
     <img class="object_rocket" src="${contextPath}/images/snLogo.svg" width="40px">

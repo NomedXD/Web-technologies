@@ -15,10 +15,15 @@
 </head>
 <body class="body">
 <jsp:include page="header.jsp"/>
+<div class="language">
+    <img src="${contextPath}/images/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
+    <img src="${contextPath}/images/lang__en.png" alt="en" data-google-lang="en">
+</div>
+<div id="google_translate_element"></div>
 <div class="gallery">
     <c:choose>
         <c:when test="${requestScope.categoties.size() == 0}">
-            <div class="bar warn">No categories found. Try later</div>
+            <div class="bar warn">Категорий не найдено, попробуйте позже</div>
         </c:when>
         <c:otherwise>
             <c:forEach items="${requestScope.categories}" var="item">
@@ -28,7 +33,7 @@
                     <h3>${item.name}</h3>
                     <p>${item.someText}</p>
                     <form action="${contextPath}/category" method="GET">
-                        <button class="buy-1" name="categoryId" value="${item.id}">Buy now</button>
+                        <button class="buy-1" name="categoryId" value="${item.id}">Купить сейчас</button>
                     </form>
                 </div>
             </c:forEach>
@@ -38,3 +43,6 @@
 </body>
 <jsp:include page="footer.jsp"/>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="${contextPath}/jsp-scripts/google-translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=TranslateInit"></script>

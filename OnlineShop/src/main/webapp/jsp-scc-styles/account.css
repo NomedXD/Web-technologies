@@ -80,3 +80,15 @@ a {
     color: #5465ff;
     text-decoration: none;
 }
+
+/* google translate hide panel*/
+body {
+    top: 0 !important;
+}
+.skiptranslate {
+    display: none;
+    height: 0;
+}
+.language__img {
+    cursor: pointer;
+}

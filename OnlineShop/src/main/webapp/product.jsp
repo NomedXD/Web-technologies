@@ -14,11 +14,15 @@
 </head>
 <body class="body">
 <jsp:include page="header.jsp"/>
+<div class="language">
+    <img src="${contextPath}/images/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
+    <img src="${contextPath}/images/lang__en.png" alt="en" data-google-lang="en">
+</div>
 <div class="container">
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">${requestScope.product.name}</h3>
-            <h6 class="card-subtitle">Category: ${requestScope.categoryName}</h6>
+            <h6 class="card-subtitle">Категория: ${requestScope.categoryName}</h6>
             <div class="row">
                 <div class="col-lg-5">
                     <div class="white-box text-left">
@@ -38,9 +42,9 @@
                     </div>
                 </div>
                 <div class="col-lg-7 justify-content: right">
-                    <h4 class="box-title mt-5">Product description</h4>
+                    <h4 class="box-title mt-5">Описание товара</h4>
                     <p>${requestScope.product.description}</p><br>
-                    <a href="${contextPath}/cart/add?productId=${requestScope.product.id}" class="btn btn-dark btn-lg">Add to cart ${requestScope.product.price}$</a>
+                    <a href="${contextPath}/cart/add?productId=${requestScope.product.id}" class="btn btn-dark btn-lg">Добавить в корзину ${requestScope.product.price}$</a>
                 </div>
             </div>
         </div>
@@ -49,4 +53,6 @@
 </body>
 <jsp:include page="footer.jsp"/>
 </html>
-
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="${contextPath}/jsp-scripts/google-translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=TranslateInit"></script>

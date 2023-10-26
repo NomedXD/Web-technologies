@@ -20,7 +20,7 @@
         <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password">
         </div>
         <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit">Log In</button>
+            <button class="btn btn-primary btn-block" type="submit">Войти</button>
         </div>
         <c:if test="${not empty requestScope.loginErrorMessage}">
             <div class="form-group">
@@ -31,7 +31,7 @@
             <a class="btn btn-primary btn-block" href="${contextPath}/registration">Register</a>
             <input type="hidden" name="defaultSuccessUrl" value="${requestScope.defaultSuccessUrl}">
         </div>
-        <a href="#" class="forgot">Forgot your email or password?</a>
+        <a href="#" class="forgot">Забыли email или пароль?</a>
     </form>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

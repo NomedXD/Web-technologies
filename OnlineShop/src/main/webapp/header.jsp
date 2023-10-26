@@ -15,11 +15,11 @@
         <div class="navb-items d-none d-xl-flex">
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/shop">Home</a>
+                <a class="btn btn-outline-dark" href="${contextPath}/shop">Главная</a>
             </div>
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/cart">Cart
+                <a class="btn btn-outline-dark" href="${contextPath}/cart">Корзина
                     <c:choose>
                         <c:when test="${empty sessionScope.cart}"> 0</c:when>
                         <c:otherwise> ${sessionScope.cart.totalSize}</c:otherwise>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/account">Account</a>
+                <a class="btn btn-outline-dark" href="${contextPath}/account">Аккаунт</a>
             </div>
 
             <div class="item">
@@ -65,12 +65,12 @@
 
                         <div class="modal-line">
                             <i class="fa-solid fa-house"></i>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/shop">Home</a>
+                            <a class="btn btn-outline-secondary" href="${contextPath}/shop">Главная</a>
                         </div>
 
                         <div class="modal-line">
                             <i class="fa-solid fa-bell-concierge"></i>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/cart">Cart
+                            <a class="btn btn-outline-secondary" href="${contextPath}/cart">Корзина
                                 <c:choose>
                                     <c:when test="${empty sessionScope.cart}"> 0</c:when>
                                     <c:otherwise> ${sessionScope.cart.totalSize}</c:otherwise>
@@ -80,7 +80,7 @@
 
                         <div class="modal-line">
                             <i class="fa-solid fa-file-lines"></i>
-                            <a class="btn btn-outline-secondary" href="${contextPath}/account">Account</a>
+                            <a class="btn btn-outline-secondary" href="${contextPath}/account">Аккаунт</a>
                         </div>
 
                         <a href="#" class="navb-button" type="button">Sales</a>

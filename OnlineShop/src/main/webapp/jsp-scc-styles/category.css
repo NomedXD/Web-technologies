@@ -54,3 +54,15 @@ h5 {
     background: transparent;
     border: 1px solid #87803e;
 }
+
+/* google translate hide panel*/
+body {
+    top: 0 !important;
+}
+.skiptranslate {
+    display: none;
+    height: 0;
+}
+.language__img {
+    cursor: pointer;
+}

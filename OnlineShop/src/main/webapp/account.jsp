@@ -15,6 +15,10 @@
 </head>
 <body class="body">
 <jsp:include page="header.jsp"/>
+<div class="language">
+    <img src="${contextPath}/images/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
+    <img src="${contextPath}/images/lang__en.png" alt="en" data-google-lang="en">
+</div>
 <!--User account info below-->
 <div class="container">
     <div class="main-body" style="padding-top:10px">
@@ -27,7 +31,7 @@
                                  class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4>${sessionScope.user.name}</h4>
-                                <p class="text-secondary mb-1">Full Stack Developer</p>
+                                <p class="text-secondary mb-1">Покупатель</p>
                                 <p class="text-muted font-size-sm">${sessionScope.user.street}, ${sessionScope.user.accommodationNumber}, ${sessionScope.user.flatNumber}</p>
                             </div>
                         </div>
@@ -39,7 +43,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
+                                <h6 class="mb-0">Полное имя</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 ${sessionScope.user.name} ${sessionScope.user.surname}
@@ -48,7 +52,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
+                                <h6 class="mb-0">Почта</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 ${sessionScope.user.mail}
@@ -57,7 +61,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Birthday</h6>
+                                <h6 class="mb-0">День рождения</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 ${sessionScope.user.date}
@@ -68,7 +72,7 @@
                               id="updateUser">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
+                                    <h6 class="mb-0">Телефон</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${sessionScope.user.mobile}
@@ -82,7 +86,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Address: Street</h6>
+                                    <h6 class="mb-0">Адрес: Улица</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${sessionScope.user.street}
@@ -96,7 +100,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Address: Accommodation number</h6>
+                                    <h6 class="mb-0">Адрес: Номер дома</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${sessionScope.user.accommodationNumber}
@@ -110,7 +114,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Address: Flat number</h6>
+                                    <h6 class="mb-0">Адрес: Номер квартиры</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${sessionScope.user.flatNumber}
@@ -125,7 +129,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <button class="btn btn-info " type="submit" form="updateUser">Edit</button>
+                                <button class="btn btn-info " type="submit" form="updateUser">Изменить</button>
                             </div>
                         </div>
                     </div>
@@ -142,7 +146,7 @@
             <div class="container">
                 <!-- Title -->
                 <div class="d-flex justify-content-between align-items-center py-3">
-                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Order #${order.id}</h2>
+                    <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Заказ #${order.id}</h2>
                 </div>
                 <!-- Main content -->
                 <div class="row">
@@ -152,10 +156,15 @@
                             <div class="card-body">
                                 <div class="mb-3 d-flex justify-content-between">
                                     <div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <a href="${contextPath}/cart/remove_order?orderId=${order.id}" class="text-muted">
+                                                <i class="fas fa-times">Удалить заказ</i>
+                                            </a>
+                                        </div>
                                         <span class="me-3">${order.date}</span>
                                         <span class="me-3">#${order.id}</span>
                                         <span class="me-3">Visa ${order.creditCardNumber}</span>
-                                        <span class="badge rounded-pill bg-info">SHIPPING</span>
+                                        <span class="badge rounded-pill bg-info">ДОСТАВКА</span>
                                     </div>
                                     <div class="d-flex">
                                         <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i
@@ -166,7 +175,7 @@
                                                 <i class="bi bi-three-dots-vertical"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a>
+                                                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Изменить</a>
                                                 </li>
                                                 <li><a class="dropdown-item" href="#"><i class="bi bi-printer"></i>
                                                     Print</a>
@@ -192,7 +201,7 @@
                                                                     ${product.name}
                                                             </a>
                                                         </h6>
-                                                        <span class="small">Category Name</span>
+                                                        <span class="small">Имя категории</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -205,11 +214,11 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="2">Subtotal</td>
+                                        <td colspan="2">Предварительно</td>
                                         <td class="text-end">$${order.price}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">Shipping</td>
+                                        <td colspan="2">Доставка</td>
                                         <td class="text-end">$${order.shippingCost}</td>
                                     </tr>
                                     <tr>
@@ -226,11 +235,11 @@
                                                 <c:set var="totalPrice" value="${order.price - order.shippingCost}"/>
                                             </c:otherwise>
                                         </c:choose>
-                                        <td colspan="2">Discount (Code: ${codeName} )</td>
+                                        <td colspan="2">Промо (Код: ${codeName} )</td>
                                         <td class="text-danger text-end">-$${codeDiscount}</td>
                                     </tr>
                                     <tr class="fw-bold">
-                                        <td colspan="2">TOTAL</td>
+                                        <td colspan="2">ВСЕГО</td>
                                         <td class="text-end">$${totalPrice}</td>
                                     </tr>
                                     </tfoot>
@@ -242,13 +251,13 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <h3 class="h6">Payment Method</h3>
+                                        <h3 class="h6">Метод оплаты</h3>
                                         <p>Visa ${order.creditCardNumber}<br>
-                                            Total: ${order.price} <span
-                                                    class="badge bg-success rounded-pill">PAID</span></p>
+                                            Всего: ${order.price} <span
+                                                    class="badge bg-success rounded-pill">ОПЛАЧЕНО</span></p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <h3 class="h6">Billing address</h3>
+                                        <h3 class="h6">Адрес оплаты</h3>
                                         <address>
                                             <strong>${sessionScope.user.name} ${sessionScope.user.surname}</strong><br>
                                             <c:choose>
@@ -266,16 +275,16 @@
                         <!-- Customer Notes -->
                         <div class="card mb-4">
                             <div class="card-body">
-                                <h3 class="h6">Customer Notes</h3>
+                                <h3 class="h6">Заметки покупателя</h3>
                                 <p>${order.customerNotes}</p>
                             </div>
                         </div>
                         <div class="card mb-4">
                             <!-- Shipping information -->
                             <div class="card-body">
-                                <h3 class="h6">Shipping Information</h3>
+                                <h3 class="h6">Информация о доставке</h3>
                                 <hr>
-                                <h3 class="h6">Address</h3>
+                                <h3 class="h6">Адрес</h3>
                                 <address>
                                     <strong>${sessionScope.user.name} ${sessionScope.user.surname}</strong><br>
                                     <c:choose>
@@ -295,3 +304,6 @@
 </body>
 <jsp:include page="footer.jsp"/>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="${contextPath}/jsp-scripts/google-translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=TranslateInit"></script>
