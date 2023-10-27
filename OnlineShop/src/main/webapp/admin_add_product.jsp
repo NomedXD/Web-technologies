@@ -4,7 +4,7 @@
 <html>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <head>
-    <title>Account</title>
+    <title>Add product</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${contextPath}/jsp-scc-styles/account.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -19,24 +19,31 @@
     <img src="${contextPath}/images/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
     <img src="${contextPath}/images/lang__en.png" alt="en" data-google-lang="en">
 </div>
-<!--User account info below-->
 <div class="container">
     <div class="main-body" style="padding-top:10px">
         <div class="row gutters-sm">
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <form action="${contextPath}/account" method="POST"
-                              id="updateUser">
+                        <form action="${contextPath}/admin/add_product" method="POST"
+                              id="updateUser" onsubmit="return validateNewProductForm()">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Телефон</h6>
+                                    <h6 class="mb-0">Добавление товара</h6>
+                                    <c:if test="${not empty requestScope.stateMessage}">
+                                        <h6 style="color: red" class="mb-0">${requestScope.stateMessage}</h6>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Название товара</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${sessionScope.user.mobile}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
-                                            <input type="text" name="mobile" class="form-control">
+                                            <input type="text" id="name" name="name" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -44,13 +51,12 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Адрес: Улица</h6>
+                                    <h6 class="mb-0">Описание товара</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${sessionScope.user.street}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
-                                            <input type="text" name="street" class="form-control">
+                                            <input type="text" id="description" name="description" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -58,13 +64,12 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Адрес: Номер дома</h6>
+                                    <h6 class="mb-0">Название категории</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${sessionScope.user.accommodationNumber}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
-                                            <input type="text" name="accommodationNumber" class="form-control">
+                                            <input type="text" id="categoryName" name="categoryName" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -72,22 +77,34 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Адрес: Номер квартиры</h6>
+                                    <h6 class="mb-0">Цена нового товара</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    ${sessionScope.user.flatNumber}
                                     <div class="d-flex">
                                         <div class="d-inline-block">
-                                            <input type="text" name="flatNumber" class="form-control">
+                                            <input type="text" id="price" name="price" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Имя картинки</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <div class="d-flex">
+                                        <div class="d-inline-block">
+                                            <input type="text" id="imagePath" name="imagePath" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                         </form>
-                        <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <button class="btn btn-info " type="submit" form="updateUser">Добавить категорию</button>
+                                <button class="btn btn-info " type="submit" form="updateUser">Добавить товар</button>
                             </div>
                         </div>
                     </div>
@@ -99,6 +116,7 @@
 </body>
 <jsp:include page="footer.jsp"/>
 </html>
+<script src="${contextPath}/jsp-scripts/admin-add-product.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script src="${contextPath}/jsp-scripts/google-translate.js"></script>
 <script src="//translate.google.com/translate_a/element.js?cb=TranslateInit"></script>

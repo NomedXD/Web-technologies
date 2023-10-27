@@ -19,9 +19,7 @@
             </div>
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/cart">Добавить товар
-                </a>
-
+                <a class="btn btn-outline-dark" href="${contextPath}/admin/add_product">Добавить товар</a>
             </div>
 
             <div class="item">

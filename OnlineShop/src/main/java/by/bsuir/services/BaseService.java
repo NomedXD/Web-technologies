@@ -6,7 +6,7 @@ import by.bsuir.exception.SQLExecutionException;
 import java.util.List;
 
 public interface BaseService<T extends BaseEntity> {
-    T create(T entity);
+    void create(T entity) throws SQLExecutionException;
 
     List<T> read() throws SQLExecutionException;
 

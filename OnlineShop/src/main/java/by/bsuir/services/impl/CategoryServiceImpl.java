@@ -18,8 +18,8 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository = new CategoryRepositoryImpl();
 
     @Override
-    public Category create(Category entity) {
-        return null;
+    public void create(Category entity) throws SQLExecutionException {
+        categoryRepository.create(entity);
     }
 
     @Override
@@ -53,5 +53,8 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(id);
     }
 
-
+    @Override
+    public Optional<Category> getCategoryByName(String name) throws SQLExecutionException {
+        return categoryRepository.findByName(name);
+    }
 }

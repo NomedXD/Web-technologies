@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends BaseRepository {
-    Category create(Category entity);
+    void create(Category entity) throws SQLExecutionException;
     List<Category> read() throws SQLExecutionException;
     Category update(Category entity);
     void delete(int id);
     Optional<Category> findById(Integer categoryId) throws SQLExecutionException;
+    Optional<Category> findByName(String categoryName) throws SQLExecutionException;
 }

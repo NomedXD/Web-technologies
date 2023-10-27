@@ -19,7 +19,6 @@
     <img src="${contextPath}/images/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
     <img src="${contextPath}/images/lang__en.png" alt="en" data-google-lang="en">
 </div>
-<!--User account info below-->
 <div class="container">
     <div class="main-body" style="padding-top:10px">
         <div class="row gutters-sm">
@@ -75,7 +74,6 @@
                                 ${sessionScope.user.id}
                             </div>
                         </div>
-                        <hr>
                         <hr>
                     </div>
                 </div>

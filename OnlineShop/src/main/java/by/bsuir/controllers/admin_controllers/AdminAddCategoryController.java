@@ -24,6 +24,6 @@ public class AdminAddCategoryController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        adminService.addCategory(req, resp);
     }
 }

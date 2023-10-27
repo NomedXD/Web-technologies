@@ -19,8 +19,7 @@ import java.util.Optional;
 public class DiscountCodeServiceImpl implements DiscountCodeService {
     private final DiscountCodeRepository discountCodeRepository = new DiscountCodeRepositoryImpl();
     @Override
-    public DiscountCode create(DiscountCode entity) {
-        return null;
+    public void create(DiscountCode entity) {
     }
 
     @Override

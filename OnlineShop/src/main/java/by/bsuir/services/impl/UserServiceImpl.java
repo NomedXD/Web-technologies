@@ -26,8 +26,7 @@ public class UserServiceImpl implements UserService {
     private final OrderService orderService = new OrderServiceImpl();
 
     @Override
-    public User create(User entity) {
-        return null;
+    public void create(User entity) {
     }
 
     @Override

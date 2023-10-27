@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends BaseRepository {
-    Product create(Product entity);
+    void create(Product entity) throws SQLExecutionException;
     List<Product> read();
     Product update(Product entity);
     void delete(int id);

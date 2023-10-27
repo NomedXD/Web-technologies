@@ -25,8 +25,8 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository = new ProductRepositoryImpl();
     CategoryService categoryService = new CategoryServiceImpl();
     @Override
-    public Product create(Product entity) {
-        return null;
+    public void create(Product entity) throws SQLExecutionException {
+        productRepository.create(entity);
     }
 
     @Override

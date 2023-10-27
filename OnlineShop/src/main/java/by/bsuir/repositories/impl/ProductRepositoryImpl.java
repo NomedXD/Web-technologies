@@ -19,9 +19,24 @@ public class ProductRepositoryImpl implements ProductRepository {
     private static final Logger logger = LoggerFactory.getLogger(ProductRepositoryImpl.class);
     private static final String GET_PRODUCTS_BY_CATEGORY_ID = "SELECT * FROM products WHERE category_id = ?";
     private static final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id = ?";
+    private static final String CREATE_PRODUCT = "INSERT INTO products(name, description, category_id, price, image_path) VALUES(?, ?, ?, ?, ?)";
     @Override
-    public Product create(Product entity) {
-        return null;
+    public void create(Product entity) throws SQLExecutionException {
+        Connection connection = connectionPool.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_PRODUCT);
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getDescription());
+            preparedStatement.setInt(3, entity.getCategoryId());
+            preparedStatement.setFloat(4, entity.getPrice());
+            preparedStatement.setString(5, entity.getImagePath());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.warn("SQLException while creating product. Full message: " + e.getMessage());
+            throw new SQLExecutionException();
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
     }
     @Override
     public List<Product> read() {

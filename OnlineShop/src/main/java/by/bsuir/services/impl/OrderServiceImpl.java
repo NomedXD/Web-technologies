@@ -19,8 +19,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository = new OrderRepositoryImpl();
     @Override
-    public Order create(Order entity) {
-        return null;
+    public void create(Order entity) {
     }
 
     @Override
