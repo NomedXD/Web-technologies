@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-public class Category extends BaseEntity{
+public class Category extends BaseEntity {
     private String name;
     private String someText;
     private String imagePath;

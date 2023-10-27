@@ -9,6 +9,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
     private String name;
 }

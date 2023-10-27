@@ -7,9 +7,11 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Connection pool to handle database request connection. Class is singleton
+ */
 public class ConnectionPool {
     private static volatile ConnectionPool instance;
-
     private static final String DB_PROPERTY_FILE = "application";
     private static final String DB_URL = "db.url";
     private static final String DB_LOGIN = "db.login";
@@ -31,6 +33,9 @@ public class ConnectionPool {
     private volatile int currentConnectionNumber = MIN_CONNECTION_COUNT;
     private final BlockingQueue<Connection> pool = new ArrayBlockingQueue<>(MAX_CONNECTION_COUNT, true);
 
+    /**
+     * @return singleton connection pool object
+     */
     public static ConnectionPool getInstance() {
         if (instance == null) {
             synchronized (ConnectionPool.class) {
@@ -44,7 +49,6 @@ public class ConnectionPool {
     }
 
     private ConnectionPool() {
-
         for (int i = 0; i < MIN_CONNECTION_COUNT; i++) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -79,6 +83,11 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Returns connection into connection pool
+     *
+     * @param connection of this connection pool
+     */
     public void closeConnection(Connection connection) {
         if (connection != null) {
             if (currentConnectionNumber > MIN_CONNECTION_COUNT) {
@@ -93,6 +102,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Close all connections from connection pool
+     */
     public void disconnect() {
         pool.forEach(s -> {
             try {

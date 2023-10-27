@@ -1,7 +1,5 @@
 package by.bsuir.utils;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 public class ValidatorUtils {
     public static boolean validatePasswordMatching(String password, String repeatPassword) {
         return password.equals(repeatPassword);

@@ -1,15 +1,12 @@
 package by.bsuir.repositories.impl;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import by.bsuir.domain.Category;
-import by.bsuir.domain.Product;
 import by.bsuir.exception.SQLExecutionException;
 import by.bsuir.repositories.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +19,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     private static final Logger logger = LoggerFactory.getLogger(CategoryRepositoryImpl.class);
     private static final String GET_All_CATEGORIES = "SELECT * FROM categories";
     private static final String GET_CATEGORY_BY_ID = "SELECT * FROM categories WHERE id = ?";
-    private static final String CREATE_CATEGORY  = "INSERT INTO categories(name, some_text, image_path) VALUES (?, ?, ?)";
+    private static final String CREATE_CATEGORY = "INSERT INTO categories(name, some_text, image_path) VALUES (?, ?, ?)";
     private static final String GET_CATEGORY_BY_NAME = "SELECT * FROM categories WHERE name = ?";
 
     @Override
@@ -65,12 +62,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Category update(Category entity) {
+    public Category update(Category entity) throws SQLExecutionException {
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLExecutionException {
 
     }
 

@@ -18,6 +18,7 @@ import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository = new OrderRepositoryImpl();
+
     @Override
     public void create(Order entity) {
     }
@@ -67,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
                 .address(request.getParameter("address"))
                 .customerNotes(request.getParameter("customerNotes")).build();
         String ccNumber = request.getParameter("creditCardNumber");
-        order.setCreditCardNumber(ccNumber.substring(0, 5).concat(" **** **** ").concat(ccNumber.substring(ccNumber.length()-5)));
+        order.setCreditCardNumber(ccNumber.substring(0, 5).concat(" **** **** ").concat(ccNumber.substring(ccNumber.length() - 5)));
         return order;
     }
 

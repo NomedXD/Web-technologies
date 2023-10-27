@@ -1,7 +1,6 @@
 package by.bsuir.repositories.impl;
 
 import by.bsuir.domain.DiscountCode;
-import by.bsuir.domain.User;
 import by.bsuir.exception.SQLExecutionException;
 import by.bsuir.repositories.DiscountCodeRepository;
 import org.slf4j.Logger;
@@ -17,9 +16,9 @@ import java.util.Optional;
 public class DiscountCodeRepositoryImpl implements DiscountCodeRepository {
     private static final Logger logger = LoggerFactory.getLogger(DiscountCodeRepositoryImpl.class);
     private static final String GET_DISCOUNT_CODE_BY_NAME = "SELECT * FROM discount_codes WHERE name = ?";
+
     @Override
-    public DiscountCode create(DiscountCode entity) {
-        return null;
+    public void create(DiscountCode entity) throws SQLExecutionException {
     }
 
     @Override
@@ -28,12 +27,12 @@ public class DiscountCodeRepositoryImpl implements DiscountCodeRepository {
     }
 
     @Override
-    public DiscountCode update(DiscountCode entity) {
+    public DiscountCode update(DiscountCode entity) throws SQLExecutionException {
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLExecutionException {
 
     }
 

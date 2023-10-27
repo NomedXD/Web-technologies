@@ -13,7 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-public class Order extends BaseEntity{
+public class Order extends BaseEntity {
     private Float price;
     private LocalDate date;
     private Integer userId;

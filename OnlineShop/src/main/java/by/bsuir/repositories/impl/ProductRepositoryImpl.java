@@ -1,7 +1,6 @@
 package by.bsuir.repositories.impl;
 
 import by.bsuir.domain.Product;
-import by.bsuir.domain.User;
 import by.bsuir.exception.SQLExecutionException;
 import by.bsuir.repositories.ProductRepository;
 import org.slf4j.Logger;
@@ -20,6 +19,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     private static final String GET_PRODUCTS_BY_CATEGORY_ID = "SELECT * FROM products WHERE category_id = ?";
     private static final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id = ?";
     private static final String CREATE_PRODUCT = "INSERT INTO products(name, description, category_id, price, image_path) VALUES(?, ?, ?, ?, ?)";
+
     @Override
     public void create(Product entity) throws SQLExecutionException {
         Connection connection = connectionPool.getConnection();
@@ -38,16 +38,19 @@ public class ProductRepositoryImpl implements ProductRepository {
             connectionPool.closeConnection(connection);
         }
     }
+
     @Override
-    public List<Product> read() {
+    public List<Product> read() throws SQLExecutionException {
         return null;
     }
+
     @Override
-    public Product update(Product entity) {
+    public Product update(Product entity) throws SQLExecutionException {
         return null;
     }
+
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLExecutionException {
 
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     private String mail;
     private String password;
     private String name;
@@ -24,6 +24,9 @@ public class User extends BaseEntity{
     private String flatNumber;
     private List<Role> roles;
 
+    /**
+     * @return if user has admin role
+     */
     public boolean hasAdminRole() {
         return getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"));
     }

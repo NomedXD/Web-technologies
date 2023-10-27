@@ -56,7 +56,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 entity.setId(resultSet.getInt("id"));
             }
             preparedStatement = connection.prepareStatement(INSERT_PRODUCT_ORDER_REFERENCE);
-            for (Product product:entity.getProductList()) {
+            for (Product product : entity.getProductList()) {
                 preparedStatement.setInt(1, entity.getId());
                 preparedStatement.setInt(2, product.getId());
                 preparedStatement.execute();
@@ -75,7 +75,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public Order update(Order entity) {
+    public Order update(Order entity) throws SQLExecutionException {
         return null;
     }
 

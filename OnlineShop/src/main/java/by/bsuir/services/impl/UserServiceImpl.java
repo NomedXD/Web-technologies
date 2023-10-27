@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void getAccountPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (((User)request.getSession().getAttribute("user")).hasAdminRole()) {
+        if (((User) request.getSession().getAttribute("user")).hasAdminRole()) {
             request.getRequestDispatcher(PagesPathEnum.ADMIN_ACCOUNT_PAGE.getPath()).forward(request, response);
         } else {
             try {

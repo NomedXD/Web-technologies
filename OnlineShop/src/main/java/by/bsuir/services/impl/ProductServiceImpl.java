@@ -24,6 +24,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository = new ProductRepositoryImpl();
     CategoryService categoryService = new CategoryServiceImpl();
+
     @Override
     public void create(Product entity) throws SQLExecutionException {
         productRepository.create(entity);
@@ -67,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
         } catch (SQLExecutionException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
-        } catch (NoSuchEntityException e)  {
+        } catch (NoSuchEntityException e) {
             LoggerFactory.getLogger(ProductRepositoryImpl.class).error(e.getLoggerMessage());
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
@@ -81,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchProductException(productId));
             Cart cart;
-            if(session.getAttribute("cart") == null) {
+            if (session.getAttribute("cart") == null) {
                 cart = new Cart();
             } else {
                 cart = (Cart) session.getAttribute("cart");
@@ -105,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void removeProductFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ((Cart)session.getAttribute("cart")).removeProduct(Integer.parseInt(request.getParameter("productId")));
+        ((Cart) session.getAttribute("cart")).removeProduct(Integer.parseInt(request.getParameter("productId")));
         request.getRequestDispatcher("/cart").forward(request, response);
     }
 

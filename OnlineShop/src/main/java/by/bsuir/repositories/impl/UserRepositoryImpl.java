@@ -22,8 +22,9 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String CREATE_USER = "INSERT INTO users(mail, password, name, surname, date) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_USER_ACCOUNT_DATA = "UPDATE users SET mobile = ?, street = ?, accommodation_number = ?, flat_number = ? WHERE id = ?";
     private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE mail = ?";
-    private static final String  GET_USER_ROLES = "SELECT * FROM users_roles JOIN roles ON users_roles.role_id = roles.id WHERE users_roles.user_id = ?";
+    private static final String GET_USER_ROLES = "SELECT * FROM users_roles JOIN roles ON users_roles.role_id = roles.id WHERE users_roles.user_id = ?";
     private static final String CREATE_USER_ROLE = "INSERT INTO users_roles(user_id, role_id) VALUES (?, ?)";
+
     @Override
     public void create(User entity) throws SQLExecutionException {
         Connection connection = connectionPool.getConnection();
@@ -73,7 +74,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLExecutionException {
 
     }
 
