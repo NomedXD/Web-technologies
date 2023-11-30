@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 @WebServlet("/cart/remove")
 public class RemoveProductFromCartController extends HttpServlet {
-    ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
 
     /**
      * Invoke service method to remove product from cart
