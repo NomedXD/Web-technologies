@@ -6,7 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 public interface CategoryService extends BaseService<Category>{
-    void getCategoryByName(String name);
+    Optional<Category> getCategoryByName(String name);
 
     ModelAndView getPaginatedCategories(Integer currentPage, Integer pageSize);
 }

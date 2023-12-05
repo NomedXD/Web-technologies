@@ -1,6 +1,7 @@
 package by.bsuir.project.controllers;
 
 import by.bsuir.project.services.CategoryService;
+import by.bsuir.project.utils.SecurityContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,9 @@ public class HomeController {
     @GetMapping
     public ModelAndView getHomePage(@RequestParam(name = "page", required = false) Integer currentPage,
                                     @RequestParam(name = "size", required = false) Integer pageSize) {
+        if (SecurityContextUtils.getUser().isPresent() && SecurityContextUtils.getUser().get().hasAdminRole()) {
+            return new ModelAndView("redirect:" + "/admin/add_category");
+        }
         return categoryService.getPaginatedCategories(currentPage, pageSize);
     }
 }

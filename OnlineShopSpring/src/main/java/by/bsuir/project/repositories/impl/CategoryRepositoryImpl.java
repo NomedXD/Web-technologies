@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -66,10 +67,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Category findByName(String name) throws EntityOperationException {
+    public Optional<Category> findByName(String name) throws EntityOperationException {
         try (Session session = factory.unwrap(Session.class)) {
-            return session.createQuery("from Category c where c.name =: name", Category.class).
-                    setParameter("name", name).getSingleResultOrNull();
+            return Optional.of(session.createQuery("from Category c where c.name =: name", Category.class).
+                    setParameter("name", name).getSingleResultOrNull());
         } catch (PersistenceException e) {
             log.warn("SQLException while getting category by it's name. Most likely request is wrong. Full message - " + e.getMessage());
             throw new EntityOperationException("Unexpected error on the site. How do you get here?\nCheck us later");

@@ -115,7 +115,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             query.setParameter("name", !search.getSearchString().isBlank()? "%"+search.getSearchString()+"%" : "%%");
             query.setParameter("description", !search.getSearchString().isBlank()? "%"+search.getSearchString()+"%" : "%%");
             query.setParameter("priceFrom", search.getPriceFrom() != null && search.getPriceFrom() > 0 ? search.getPriceFrom() : -1);
-            query.setParameter("priceTo", search.getPriceTo() != null && search.getPriceTo() > 0 ? search.getPriceFrom() : 1000000);
+            query.setParameter("priceTo", search.getPriceTo() != null && search.getPriceTo() > 0 ? search.getPriceTo() : 1000000);
             query.setParameter("categoryName", !search.getCategoryName().isBlank()? "%"+search.getCategoryName()+"%" : "%%");
             return query.list();
         } catch (PersistenceException e) {
@@ -127,7 +127,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Long countAllByCategoryId(Integer categoryId) {
         try(Session session = factory.unwrap(Session.class)) {
-            return session.createQuery("select count(*) from Product", Long.class).getSingleResultOrNull();
+            return session.createQuery("select count(*) from Product p where p.category.id =: id", Long.class).setParameter("id", categoryId).getSingleResultOrNull();
         } catch (PersistenceException e) {
             log.warn("SQLException while getting count of all products. Most likely request is wrong. Full message - " + e.getMessage());
             throw new EntityOperationException("Unexpected error on the site. How do you get here?\nCheck us later");
@@ -151,7 +151,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             query.setParameter("name", !search.getSearchString().isBlank()? "%"+search.getSearchString()+"%" : "%%");
             query.setParameter("description", !search.getSearchString().isBlank()? "%"+search.getSearchString()+"%" : "%%");
             query.setParameter("priceFrom", search.getPriceFrom() != null && search.getPriceFrom() > 0 ? search.getPriceFrom() : -1);
-            query.setParameter("priceTo", search.getPriceTo() != null && search.getPriceTo() > 0 ? search.getPriceFrom() : 1000000);
+            query.setParameter("priceTo", search.getPriceTo() != null && search.getPriceTo() > 0 ? search.getPriceTo() : 1000000);
             query.setParameter("categoryName", !search.getCategoryName().isBlank()? "%"+search.getCategoryName()+"%" : "%%");
             return query.getSingleResultOrNull();
         } catch (PersistenceException e) {

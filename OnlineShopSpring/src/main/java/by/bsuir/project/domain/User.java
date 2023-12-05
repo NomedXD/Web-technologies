@@ -79,4 +79,8 @@ public class User extends BaseEntity{
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") })
     private List<Role> roles;
+
+    public boolean hasAdminRole() {
+        return roles.stream().anyMatch(role -> role.getName().equals("ADMIN"));
+    }
 }
