@@ -42,22 +42,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User entity) {
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        return userRepository.save(entity);
+        return userRepository.create(entity);
     }
 
     @Override
     public List<User> read() {
-        return userRepository.findAll();
+        return userRepository.read();
     }
 
     @Override
     public User update(User entity) {
-        return userRepository.save(entity);
+        return userRepository.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        userRepository.deleteById(id);
+        userRepository.delete(id);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ModelAndView register(User user, BindingResult bindingResult, String repeatPassword) {
         if (!bindingResult.hasErrors() && ValidatorUtils.validatePasswordMatching(user.getPassword(), repeatPassword)) {
-            userRepository.save(User.builder().mail(user.getMail()).password(passwordEncoder.encode(user.getPassword())).name(user.getName()).
+            userRepository.create(User.builder().mail(user.getMail()).password(passwordEncoder.encode(user.getPassword())).name(user.getName()).
                     surname(user.getSurname()).date(user.getDate()).orders(new ArrayList<>()).roles(List.of(Role.builder().id(2).name(UserRoleEnum.USER.name()).build())).build());
             ModelMap modelMap = new ModelMap();
             modelMap.addAttribute("loginErrorMessage", "Now you can log in");

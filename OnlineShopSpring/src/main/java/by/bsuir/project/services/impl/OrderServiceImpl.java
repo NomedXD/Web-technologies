@@ -9,9 +9,8 @@ import by.bsuir.project.repositories.OrderRepository;
 import by.bsuir.project.services.OrderService;
 import by.bsuir.project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -20,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
@@ -34,28 +34,27 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order create(Order entity) {
-        return orderRepository.save(entity);
+        return orderRepository.create(entity);
     }
 
     @Override
     public List<Order> read() {
-        return orderRepository.findAll();
+        return orderRepository.read();
     }
 
     @Override
     public Order update(Order entity) {
-        return orderRepository.save(entity);
+        return orderRepository.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        orderRepository.deleteById(id);
+        orderRepository.delete(id);
     }
 
     @Override
     public List<Order> getPaginatedOrders(Integer currentPage, Integer pageSize, Integer userId) {
-        Pageable pageable = PageRequest.of((currentPage - 1), pageSize);
-        return orderRepository.findAllByUserId(userId, pageable);
+        return orderRepository.findAllByUserId(userId, currentPage, pageSize);
     }
 
     @Override
@@ -67,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ModelAndView applyOrder(Order order, Cart cart, User user) {
         preBuildOrder(order, cart, user);
-        user.getOrders().add(orderRepository.save(order));
+        user.getOrders().add(orderRepository.create(order));
         user = userService.update(user);
         cart.clear();
         return new ModelAndView(PagesPathEnum.CART_PAGE.getPath());
@@ -84,8 +83,6 @@ public class OrderServiceImpl implements OrderService {
         if(Optional.ofNullable(order.getOrderDetails()).isEmpty()){
             order.setOrderDetails(new ArrayList<>());
         }
-        cart.getProductQuantities().forEach((productId, productQuantity)-> {
-            order.getOrderDetails().add(OrderDetails.builder().order(order).productId(productId).productQuantity(productQuantity).build());
-        });
+        cart.getProductQuantities().forEach((productId, productQuantity)-> order.getOrderDetails().add(OrderDetails.builder().order(order).productId(productId).productQuantity(productQuantity).build()));
     }
 }

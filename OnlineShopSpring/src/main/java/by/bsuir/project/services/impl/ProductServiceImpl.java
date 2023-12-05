@@ -7,16 +7,12 @@ import by.bsuir.project.enums.EshopConstants;
 import by.bsuir.project.enums.PagesPathEnum;
 import by.bsuir.project.enums.RequestParamsEnum;
 import by.bsuir.project.repositories.ProductRepository;
-import by.bsuir.project.repositories.ProductSearchSpecification;
 import by.bsuir.project.services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +28,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(Product entity) {
-        return productRepository.save(entity);
+        return productRepository.create(entity);
     }
 
     @Override
     public List<Product> read() {
-        return productRepository.findAll();
+        return productRepository.read();
     }
 
     @Override
     public Product update(Product entity) {
-        return productRepository.save(entity);
+        return productRepository.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        productRepository.deleteById(id);
+        productRepository.delete(id);
     }
 
     @Override
@@ -62,12 +58,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Long getCountOfAllProducts() {
-        return productRepository.count();
+        return productRepository.countAll();
     }
 
     @Override
     public Long getCountAppropriateProducts(Search search) {
-        return productRepository.count(new ProductSearchSpecification(search));
+        return productRepository.countAllBySearch(search);
     }
 
     @Override
@@ -81,13 +77,10 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList;
         if ((search == null) || (search.getSearchString() == null)) {
             count = getCountOfAllProducts();
-            Pageable pageable = PageRequest.of((currentPage - 1), pageSize,
-                    Sort.by("name"));
-            productList = productRepository.findAll(pageable).getContent();
+            productList = productRepository.findAllInOrderByName(currentPage, pageSize);
         } else {
             count = getCountAppropriateProducts(search);
-            Pageable pageable = PageRequest.of((currentPage - 1), pageSize, Sort.by("name"));
-            productList = productRepository.findAll(new ProductSearchSpecification(search), pageable).getContent();
+            productList = productRepository.findAllSearchedInOrderByName(search, currentPage, pageSize);
             model.addAttribute(EshopConstants.SEARCH_ENTITY, search);
         }
         model.addAttribute(RequestParamsEnum.TOTAL_SEARCH_RESULTS.getValue(), count);
@@ -105,13 +98,12 @@ public class ProductServiceImpl implements ProductService {
             currentPage = 1;
             pageSize = EshopConstants.MIN_PAGE_SIZE;
         }
-        Pageable pageable = PageRequest.of((currentPage - 1), pageSize);
         ModelMap model = new ModelMap();
         model.addAttribute(RequestParamsEnum.CURRENT_PAGE.getValue(), currentPage);
         model.addAttribute(RequestParamsEnum.PAGE_SIZE.getValue(), pageSize);
         model.addAttribute(RequestParamsEnum.TOTAL_PAGINATED_VISIBLE_PAGES.getValue(), EshopConstants.TOTAL_PAGINATED_VISIBLE_PAGES);
         model.addAttribute(RequestParamsEnum.LAST_PAGE_NUMBER.getValue(), Math.ceil(productRepository.countAllByCategoryId(categoryId) / pageSize.doubleValue()));
-        model.addAttribute(RequestParamsEnum.PRODUCTS.getValue(), productRepository.findAllByCategoryIdOrderByName(categoryId, pageable));
+        model.addAttribute(RequestParamsEnum.PRODUCTS.getValue(), productRepository.findAllByCategoryIdOrderByName(categoryId, currentPage, pageSize));
         return new ModelAndView(PagesPathEnum.CATEGORY_PAGE.getPath(), model);
     }
 

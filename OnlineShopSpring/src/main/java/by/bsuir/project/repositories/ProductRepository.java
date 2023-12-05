@@ -1,14 +1,18 @@
 package by.bsuir.project.repositories;
 
 import by.bsuir.project.domain.Product;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import by.bsuir.project.domain.Search;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
+public interface ProductRepository extends BaseRepository<Product> {
+    Optional<Product> findById(Integer id);
     List<Product> findAllByCategoryId(Integer categoryId);
-    List<Product> findAllByCategoryIdOrderByName(Integer categoryId, Pageable pageable);
+    List<Product> findAllByCategoryIdOrderByName(Integer categoryId, Integer currentPage, Integer pageSize);
+    List<Product> findAllInOrderByName(Integer currentPage, Integer pageSize);
+    List<Product> findAllSearchedInOrderByName(Search search, Integer currentPage, Integer pageSize);
     Long countAllByCategoryId(Integer categoryId);
+    Long countAll();
+    Long countAllBySearch(Search search);
 }

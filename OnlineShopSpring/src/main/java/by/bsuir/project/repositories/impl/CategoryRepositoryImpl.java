@@ -10,12 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@Transactional
 @Slf4j
 public class CategoryRepositoryImpl implements CategoryRepository {
     @PersistenceContext
@@ -68,7 +66,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Category getCategoryByName(String name) throws EntityOperationException {
+    public Category findByName(String name) throws EntityOperationException {
         try (Session session = factory.unwrap(Session.class)) {
             return session.createQuery("from Category c where c.name =: name", Category.class).
                     setParameter("name", name).getSingleResultOrNull();
@@ -83,7 +81,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         try(Session session = factory.unwrap(Session.class)) {
             return session.createQuery("select count(*) from Category", Long.class).getSingleResultOrNull();
         } catch (PersistenceException e) {
-            log.warn("SQLException while getting count of all products. Most likely request is wrong. Full message - " + e.getMessage());
+            log.warn("SQLException while getting count of all categories. Most likely request is wrong. Full message - " + e.getMessage());
             throw new EntityOperationException("Unexpected error on the site. How do you get here?\nCheck us later");
         }
     }
@@ -93,7 +91,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         try(Session session = factory.unwrap(Session.class)) {
             return session.createQuery("from Category c order by c.name", Category.class).setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize).list();
         } catch (PersistenceException e) {
-            log.warn("SQLException while getting all products in name order. Most likely request is wrong. Full message - " + e.getMessage());
+            log.warn("SQLException while getting all paginated products in name order. Most likely request is wrong. Full message - " + e.getMessage());
             throw new EntityOperationException("Unexpected error on the site. How do you get here?\nCheck us later");
         }
     }

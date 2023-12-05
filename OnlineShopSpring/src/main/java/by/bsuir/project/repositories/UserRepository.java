@@ -10,8 +10,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends BaseRepository<User> {
     Optional<User> findUserByMail(String mail);
+
+    Optional<User> findById(Integer id);
 
     @Query("select o from Order o where o.user.id = :id")
     List<Order> findOrdersByUserId(@Param("id") Integer id) throws EntityOperationException;
