@@ -6,15 +6,12 @@ import by.bsuir.project.enums.PagesPathEnum;
 import by.bsuir.project.services.CategoryService;
 import by.bsuir.project.services.ProductService;
 import by.bsuir.project.validator.ValidatorUtils;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -40,22 +37,18 @@ public class AdminServiceImpl {
     }
 
     public ModelAndView addProduct(Product product, String categoryName) {
-        try {
-            Optional<Category> category = categoryService.getCategoryByName(categoryName);
-            if (ValidatorUtils.validateNewProduct(product.getName(), product.getPrice(), product.getDescription(), product.getImages().get(0).getPath()) && category.isPresent()) {
-                productService.create(Product.builder().name(product.getName())
-                        .description(product.getDescription())
-                        .category(category.get())
-                        .price(product.getPrice())
-                        .images(product.getImages());
-                request.setAttribute("stateMessage", "Продукт добавлен");
-            } else {
-                request.setAttribute("stateMessage", "Неверные данные");
-            }
-            request.getRequestDispatcher(PagesPathEnum.ADMIN_ADD_PRODUCT_PAGE.getPath()).forward(request, response);
-        } catch (SQLExecutionException e) {
-            request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher(PagesPathEnum.ERROR_PAGE.getPath()).forward(request, response);
+        Optional<Category> category = categoryService.getCategoryByName(categoryName);
+        ModelMap modelMap = new ModelMap();
+        if (ValidatorUtils.validateNewProduct(product.getName(), product.getPrice(), product.getDescription(), product.getImages().get(0).getPath()) && category.isPresent()) {
+            productService.create(Product.builder().name(product.getName())
+                    .description(product.getDescription())
+                    .category(category.get())
+                    .price(product.getPrice())
+                    .images(product.getImages()).orders(new ArrayList<>()).build());
+            modelMap.addAttribute("stateMessage", "Продукт добавлен");
+        } else {
+            modelMap.addAttribute("stateMessage", "Неверные данные");
         }
+        return new ModelAndView(PagesPathEnum.ADMIN_ADD_PRODUCT_PAGE.getPath(), modelMap);
     }
 }

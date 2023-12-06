@@ -30,8 +30,8 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Добавление товара</h6>
-                                    <c:if test="${not empty requestScope.stateMessage}">
-                                        <h6 style="color: red" class="mb-0">${requestScope.stateMessage}</h6>
+                                    <c:if test="${not empty stateMessage}">
+                                        <h6 style="color: red" class="mb-0">${stateMessage}</h6>
                                     </c:if>
                                 </div>
                             </div>

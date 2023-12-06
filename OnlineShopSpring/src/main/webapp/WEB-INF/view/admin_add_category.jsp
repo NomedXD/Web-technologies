@@ -30,8 +30,8 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Добавление категории</h6>
-                                    <c:if test="${not empty requestScope.stateMessage}">
-                                        <h6 style="color: red" class="mb-0">${requestScope.stateMessage}</h6>
+                                    <c:if test="${not empty stateMessage}">
+                                        <h6 style="color: red" class="mb-0">${stateMessage}</h6>
                                     </c:if>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                 <div class="col-sm-9 text-secondary">
                                     <div class="d-flex">
                                         <div class="d-inline-block">
-                                            <input type="text" id="someText" name="someText" class="form-control">
+                                            <input type="text" id="sometext" name="sometext" class="form-control">
                                         </div>
                                     </div>
                                 </div>

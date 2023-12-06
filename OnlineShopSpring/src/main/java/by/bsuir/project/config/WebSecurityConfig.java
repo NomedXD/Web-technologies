@@ -25,8 +25,9 @@ public class WebSecurityConfig {
                                 .authenticated()
                                 .requestMatchers(new AntPathRequestMatcher("/**/import/**"),
                                         new AntPathRequestMatcher("/category/export/**"),
+                                        new AntPathRequestMatcher("/admin/**"),
                                         new AntPathRequestMatcher("/catalog/export/**"))
-                                .hasRole("ADMIN")
+                                .hasAuthority("ADMIN")
                                 .anyRequest().permitAll()
                 ).formLogin(form -> form
                         .loginPage("/login")

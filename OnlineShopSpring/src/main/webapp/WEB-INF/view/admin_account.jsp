@@ -1,8 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<sec:authentication var="user" property="principal.user"/>
 <head>
     <title>Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +31,7 @@
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
                                  class="rounded-circle" width="150">
                             <div class="mt-3">
-                                <h4>${sessionScope.user.name}</h4>
+                                <h4>${user.name}</h4>
                                 <p class="text-secondary mb-1">Администратор</p>
                             </div>
                         </div>
@@ -44,7 +46,7 @@
                                 <h6 class="mb-0">Полное имя</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${sessionScope.user.name} ${sessionScope.user.surname}
+                                ${user.name} ${user.surname}
                             </div>
                         </div>
                         <hr>
@@ -53,7 +55,7 @@
                                 <h6 class="mb-0">Почта</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${sessionScope.user.mail}
+                                ${user.mail}
                             </div>
                         </div>
                         <hr>
@@ -62,7 +64,7 @@
                                 <h6 class="mb-0">День рождения</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${sessionScope.user.date}
+                                ${user.date}
                             </div>
                         </div>
                         <hr>
@@ -71,7 +73,7 @@
                                 <h6 class="mb-0">ID администратора</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${sessionScope.user.id}
+                                ${user.id}
                             </div>
                         </div>
                         <hr>

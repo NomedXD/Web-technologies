@@ -1,8 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <header>
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+    <sec:authentication var="user" property="principal.user"/>
     <link rel="stylesheet" href="${contextPath}/fontawesome/css/all.css">
     <script src="https://kit.fontawesome.com/4ac4b6b525.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -23,13 +25,13 @@
             </div>
 
             <div class="item">
-                <a class="btn btn-outline-dark" href="${contextPath}/account">Аккаунт</a>
+                <a class="btn btn-outline-dark" href="${contextPath}/admin/account">Аккаунт</a>
             </div>
 
             <div class="item">
                 <a class="btn btn-outline-dark" href="${contextPath}/login" type="button"><i class="fa fa-sign-in"></i></a>
             </div>
-            <c:if test="${not empty sessionScope.user}">
+            <c:if test="${not empty user}">
                 <div class="item">
                     <a class="btn btn-outline-dark" href="${contextPath}/logout" type="button"><i class="fa fa-sign-out"></i></a>
                 </div>

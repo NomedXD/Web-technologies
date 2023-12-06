@@ -12,9 +12,9 @@ public enum PagesPathEnum {
     ERROR_PAGE("error"),
     PROJECT_INFO_PAGE("project-info"),
     DB_TIME_INFO_PAGE("db-time-info"),
-    ADMIN_ACCOUNT_PAGE("/admin_account.jsp"),
-    ADMIN_ADD_CATEGORY_PAGE("/admin_add_category.jsp"),
-    ADMIN_ADD_PRODUCT_PAGE("/admin_add_product.jsp");
+    ADMIN_ACCOUNT_PAGE("admin_account"),
+    ADMIN_ADD_CATEGORY_PAGE("admin_add_category"),
+    ADMIN_ADD_PRODUCT_PAGE("admin_add_product");
     private final String path;
 
     PagesPathEnum(String path) {

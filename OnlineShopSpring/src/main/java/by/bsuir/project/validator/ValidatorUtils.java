@@ -10,12 +10,6 @@ public class ValidatorUtils {
     }
 
     public static boolean validateNewProduct(String name, Float price, String description, String imagePath) {
-        float parsedPrice;
-        try {
-            parsedPrice = Float.parseFloat(price);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return !name.isEmpty() && name.length() <= 45 && parsedPrice > 0 && !description.isEmpty() && !imagePath.isEmpty() && imagePath.length() <= 70;
+        return !name.isEmpty() && name.length() <= 45 && !description.isEmpty() && !imagePath.isEmpty() && imagePath.length() <= 70 && price != null && price > 0;
     }
 }
